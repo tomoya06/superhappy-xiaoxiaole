@@ -7,6 +7,7 @@ import { Block } from "../../utils/types";
 
 export function GameBoard() {
   const [cells, setCells] = useState<Block[][]>(genBoard(BoardSize));
+  const [isChecking, setIsChecking] = useState(false);
 
   let startEvt: MouseEvent | null = null;
 
@@ -88,15 +89,16 @@ export function GameBoard() {
 
     swapPosition(targetIdx, swapIdx);
 
-    // FIXME: 先检查能不能换
-    startChecking();
+    startCheckingJob();
+  }
+
+  async function startCheckingJob() {
+    setIsChecking(true);
+    while (await startChecking()) {}
+    setIsChecking(false);
   }
 
   async function startChecking() {
-    // do {
-    //   await delay(2000);
-    //   console.log('startChecking');
-    // } while(checkBoard(cells));
     const hasKilled = checkBoard(cells);
     updateCells();
     if (hasKilled) {
@@ -106,8 +108,9 @@ export function GameBoard() {
       updateCells();
 
       await delay(1000);
-      startChecking();
     }
+
+    return hasKilled;
   }
 
   function swapPosition(targetIdx: number[], swapIdx: number[]) {
@@ -115,35 +118,43 @@ export function GameBoard() {
       cells[swapIdx[0]][swapIdx[1]],
       cells[targetIdx[0]][targetIdx[1]],
     ];
-    console.log(cells);
-    setCells(cells);
+    updateCells();
   }
 
   function handleMousedown(evt: MouseEvent) {
+    if (isChecking) {
+      return;
+    }
     // console.log('handleMousedown', evt);
     startEvt = evt;
   }
   function handleMouseup(evt: MouseEvent) {
+    if (isChecking) {
+      return;
+    }
     // console.log('handleMouseup', evt);
     handleMouseMoveFinish(startEvt, evt);
     startEvt = null;
   }
 
   return (
-    <div
-      id="gameboard"
-      onMouseDown={handleMousedown}
-      onMouseUp={handleMouseup}
-      onMouseLeave={handleMouseup}
-    >
-      {cells
-        .flatMap((row) => row)
-        .map((cell, idx) => {
-          const rowIdx = Math.floor(idx / BoardSize);
-          const colIdx = Math.floor(idx % BoardSize);
+    <>
+      <div
+        id="gameboard"
+        onMouseDown={handleMousedown}
+        onMouseUp={handleMouseup}
+        onMouseLeave={handleMouseup}
+      >
+        {cells
+          .flatMap((row) => row)
+          .map((cell, idx) => {
+            const rowIdx = Math.floor(idx / BoardSize);
+            const colIdx = Math.floor(idx % BoardSize);
 
-          return <Cell value={cell} posXY={[colIdx, rowIdx]} key={cell.id} />;
-        })}
-    </div>
+            return <Cell value={cell} posXY={[colIdx, rowIdx]} key={cell.id} />;
+          })}
+      </div>
+      <div>{isChecking && <span>检查!</span>}</div>
+    </>
   );
 }

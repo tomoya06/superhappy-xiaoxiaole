@@ -12,6 +12,8 @@ export function Cell(props: { value: Block; posXY: number[] }) {
       class="cell"
       style={{
         background: cellColor,
+        gridColumn: posXY[0]+1,
+        gridRow: posXY[1]+1,
       }}
       data-posx={posXY[0]}
       data-posy={posXY[1]}
