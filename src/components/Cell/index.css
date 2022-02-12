@@ -1,0 +1,19 @@
+.cell {
+  width: 60px;
+  height: 60px;
+  border: 1px solid red;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.cell-value {
+  font-size: 20px;
+}
+
+.cell-id {
+  font-size: 12px;
+}

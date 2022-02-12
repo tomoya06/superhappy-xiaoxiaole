@@ -1,0 +1,10 @@
+
+#gameboard {
+  width: 600px;
+  height: 600px;
+  outline: 1px solid black;
+}
+
+.boardrow {
+  display: flex;
+}
