@@ -3,8 +3,8 @@
   width: 600px;
   height: 600px;
   outline: 1px solid black;
-}
 
-.boardrow {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(8, 60px);
+  grid-template-rows: repeat(8, 60px);
 }

@@ -19,8 +19,8 @@ export function GameBoard() {
     if (!from) {
       return;
     }
-    const fromXY = [from.offsetX, from.offsetY];
-    const toXY = [to.offsetX, to.offsetY];
+    const fromXY = [from.clientX, from.clientY];
+    const toXY = [to.clientX, to.clientY];
 
     console.log("-======-");
     // console.log("move evt: ", from, to);
@@ -101,9 +101,12 @@ export function GameBoard() {
     updateCells();
     if (hasKilled) {
       console.log("hasNewKilled");
-      await delay(2000);
+      await delay(500);
       killBoard(cells);
       updateCells();
+
+      await delay(1000);
+      startChecking();
     }
   }
 
@@ -133,13 +136,14 @@ export function GameBoard() {
       onMouseUp={handleMouseup}
       onMouseLeave={handleMouseup}
     >
-      {cells.map((row, rowIdx) => (
-        <div class="boardrow" key={rowIdx}>
-          {row.map((cell, colIdx) => (
-            <Cell value={cell} posXY={[colIdx, rowIdx]} key={cell.id} />
-          ))}
-        </div>
-      ))}
+      {cells
+        .flatMap((row) => row)
+        .map((cell, idx) => {
+          const rowIdx = Math.floor(idx / BoardSize);
+          const colIdx = Math.floor(idx % BoardSize);
+
+          return <Cell value={cell} posXY={[colIdx, rowIdx]} key={cell.id} />;
+        })}
     </div>
   );
 }
