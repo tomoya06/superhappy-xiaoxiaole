@@ -1,6 +1,7 @@
 import { ValueColorMapper, ValueIconMapper } from "../../utils/const";
 import { Block } from "../../utils/types";
 import "./index.css";
+import "animate.css";
 
 export function Cell(props: { value: Block; posXY: number[] }) {
   const { value, posXY } = props;
@@ -10,7 +11,7 @@ export function Cell(props: { value: Block; posXY: number[] }) {
 
   return (
     <div
-      class="cell"
+      class="cell animate__animated  animate__zoomIn"
       data-posx={posXY[0]}
       data-posy={posXY[1]}
       style={{

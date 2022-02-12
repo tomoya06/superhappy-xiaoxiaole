@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "animate-css-grid": "^1.4.3",
+    "animate.css": "^4.1.1",
     "preact": "^10.5.15"
   },
   "devDependencies": {
