@@ -12,6 +12,7 @@ const genRandomBlock = (): Block => {
     id: curIdx++,
     value: genRandomValue(),
     isKilled: false,
+    isDeleted: false,
   };
 };
 
@@ -83,10 +84,22 @@ export const killBoard = (cells: Block[][]): void => {
     }
 
     for (let y = diff - 1; y >= 0; y -= 1) {
-      cells[y][x] = genRandomBlock();
+      cells[y][x].isDeleted = true;
     }
   }
 };
+
+export const deleteBoard = (cells: Block[][]): void => {
+  const MaxRow = cells.length;
+  const MaxCol = cells[0].length;
+  for (let x = 0; x<MaxCol; x+=1) {
+    for (let y=MaxRow-1; y>=0; y-=1) {
+      if (cells[y][x].isDeleted) {
+        cells[y][x] = genRandomBlock();
+      }
+    }
+  }
+}
 
 export const delay = async (int: number) => {
   const p = new Promise((resolve) => {

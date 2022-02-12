@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "animate-css-grid": "^1.4.3",
     "preact": "^10.5.15"
   },
   "devDependencies": {
