@@ -9,7 +9,15 @@ export function Cell(props: { value: Block; posXY: number[] }) {
   const cellOpacity = value.isDeleted ? 0 : 1;
 
   return (
-    <div class="cell" data-posx={posXY[0]} data-posy={posXY[1]}>
+    <div
+      class="cell"
+      data-posx={posXY[0]}
+      data-posy={posXY[1]}
+      style={{
+        left: posXY[0] * 60,
+        top: posXY[1] * 60,
+      }}
+    >
       <div
         class="cell-container"
         style={{

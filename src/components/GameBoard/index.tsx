@@ -1,5 +1,5 @@
 import "./index.css";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import { BoardSize, MoveThreshold } from "../../utils/const";
 import {
   checkBoard,
@@ -10,24 +10,12 @@ import {
 } from "../../utils/func";
 import { Cell } from "../Cell";
 import { Block } from "../../utils/types";
-import { wrapGrid } from "animate-css-grid";
 
 const animationDelay = 300;
 
 export function GameBoard() {
   const [cells, setCells] = useState<Block[][]>(genBoard(BoardSize));
   const [isChecking, setIsChecking] = useState(false);
-
-  useEffect(() => {
-    const boardElem = document.getElementById("gameboard");
-    if (!boardElem) {
-      return;
-    }
-    wrapGrid(boardElem, {
-      duration: animationDelay,
-      easing: "easeInOut",
-    });
-  }, []);
 
   let startEvt: MouseEvent | null = null;
 
@@ -122,9 +110,11 @@ export function GameBoard() {
     await delay(animationDelay);
     const hasKilled = checkBoard(cells);
     updateCells();
+
     if (hasKilled) {
       console.log("hasNewKilled");
       await delay(500);
+
       killBoard(cells);
       updateCells();
 
