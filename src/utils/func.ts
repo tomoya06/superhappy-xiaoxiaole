@@ -1,7 +1,9 @@
 import { MaxValue } from "./const";
-import { Block } from "./types";
+import { Block, BlockWithPos, CellsMapType } from "./types";
 
 let curIdx = 1;
+const cells: Block[][] = [];
+const cellsMap: CellsMapType = {};
 
 const genRandomValue = (): number => {
   return Math.floor(Math.random() * MaxValue) + 1;
@@ -17,19 +19,49 @@ const genRandomBlock = (): Block => {
 };
 
 export const genBoard = (size = 10) => {
-  const board: Block[][] = [];
+  cells.splice(0);
 
   for (let i = 0; i < size; i += 1) {
-    board.push([]);
+    cells.push([]);
     for (let j = 0; j < size; j += 1) {
-      board[i].push(genRandomBlock());
+      cells[i].push(genRandomBlock());
+    }
+  }
+};
+
+export const exportBoard = (): BlockWithPos[] => {
+  const exisingCellsMap: Record<number, boolean> = {};
+  cells.forEach((row, rowIdx) => {
+    row.forEach((cell, colIdx) => {
+      cellsMap[cell.id] = {
+        ...cell,
+        pos: [colIdx, rowIdx],
+      };
+      exisingCellsMap[cell.id] = true;
+    });
+  });
+
+  const res: BlockWithPos[] = [];
+
+  for (const cellId in cellsMap) {
+    if (!exisingCellsMap[cellId]) {
+      delete cellsMap[cellId];
+    } else {
+      res.push(cellsMap[cellId]);
     }
   }
 
-  return board;
+  return res;
 };
 
-export const checkBoard = (cells: Block[][]): boolean => {
+export const swapPosition = (targetIdx: number[], swapIdx: number[]): void => {
+  [cells[targetIdx[0]][targetIdx[1]], cells[swapIdx[0]][swapIdx[1]]] = [
+    cells[swapIdx[0]][swapIdx[1]],
+    cells[targetIdx[0]][targetIdx[1]],
+  ];
+};
+
+export const checkBoard = (): boolean => {
   const MaxRow = cells.length;
   const MaxCol = cells[0].length;
   let hasKilled = false;
@@ -67,7 +99,7 @@ export const checkBoard = (cells: Block[][]): boolean => {
   return hasKilled;
 };
 
-export const killBoard = (cells: Block[][]): void => {
+export const killBoard = (): void => {
   const MaxRow = cells.length;
   const MaxCol = cells[0].length;
 
@@ -89,17 +121,17 @@ export const killBoard = (cells: Block[][]): void => {
   }
 };
 
-export const deleteBoard = (cells: Block[][]): void => {
+export const deleteBoard = (): void => {
   const MaxRow = cells.length;
   const MaxCol = cells[0].length;
-  for (let x = 0; x<MaxCol; x+=1) {
-    for (let y=MaxRow-1; y>=0; y-=1) {
+  for (let x = 0; x < MaxCol; x += 1) {
+    for (let y = MaxRow - 1; y >= 0; y -= 1) {
       if (cells[y][x].isDeleted) {
         cells[y][x] = genRandomBlock();
       }
     }
   }
-}
+};
 
 export const delay = async (int: number) => {
   const p = new Promise((resolve) => {

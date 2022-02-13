@@ -1,28 +1,36 @@
 import "./index.css";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { BoardSize, MoveThreshold } from "../../utils/const";
 import {
   checkBoard,
   delay,
   deleteBoard,
+  exportBoard,
   genBoard,
   killBoard,
+  swapPosition,
 } from "../../utils/func";
 import { Cell } from "../Cell";
-import { Block } from "../../utils/types";
+import { Block, BlockWithPos } from "../../utils/types";
 import { TransitionGroup, CSSTransition } from "preact-transitioning";
 
 const animationDelay = 300;
 
 export function GameBoard() {
-  const [cells, setCells] = useState<Block[][]>(genBoard(BoardSize));
+  const [cells, setCells] = useState<BlockWithPos[]>([]);
   const [isChecking, setIsChecking] = useState(false);
 
   let startEvt: MouseEvent | null = null;
 
+  useEffect(() => {
+    genBoard(BoardSize);
+    updateCells();
+  }, []);
+
   // 原地更新cells
   function updateCells() {
-    setCells(cells.map((row) => [...row]));
+    const newCells = exportBoard();
+    setCells(newCells);
   }
 
   function handleMouseMoveFinish(from: MouseEvent | null, to: MouseEvent) {
@@ -97,6 +105,7 @@ export function GameBoard() {
     }
 
     swapPosition(targetIdx, swapIdx);
+    updateCells();
 
     startCheckingJob();
   }
@@ -109,32 +118,23 @@ export function GameBoard() {
 
   async function startChecking() {
     await delay(animationDelay);
-    const hasKilled = checkBoard(cells);
+    const hasKilled = checkBoard();
     updateCells();
 
     if (hasKilled) {
       console.log("hasNewKilled");
-      await delay(500);
+      await delay(300);
 
-      killBoard(cells);
+      killBoard();
       updateCells();
 
-      await delay(animationDelay + 50);
-      deleteBoard(cells);
+      deleteBoard();
       updateCells();
 
       await delay(1000);
     }
 
     return hasKilled;
-  }
-
-  function swapPosition(targetIdx: number[], swapIdx: number[]) {
-    [cells[targetIdx[0]][targetIdx[1]], cells[swapIdx[0]][swapIdx[1]]] = [
-      cells[swapIdx[0]][swapIdx[1]],
-      cells[targetIdx[0]][targetIdx[1]],
-    ];
-    updateCells();
   }
 
   function handleMousedown(evt: MouseEvent) {
@@ -163,21 +163,18 @@ export function GameBoard() {
       >
         <TransitionGroup>
           {cells
-            .flatMap((row) => row)
-            .filter((cell) => !cell.isDeleted || !cell.isKilled)
-            .map((cell, idx) => {
-              const rowIdx = Math.floor(idx / BoardSize);
-              const colIdx = Math.floor(idx % BoardSize);
-
+            .filter((cell) => !cell.isDeleted)
+            .map((cell) => {
               return (
                 <CSSTransition key={cell.id} classNames="item">
                   <div
+                    key={cell.id}
                     style={{
-                      left: colIdx * 60,
-                      ["--top"]: `${rowIdx * 60}px`,
+                      left: cell.pos[0] * 60,
+                      ["--top"]: `${cell.isDeleted ? 0 : cell.pos[1] * 60}px`,
                     }}
-                    data-posx={colIdx}
-                    data-posy={rowIdx}
+                    data-posx={cell.pos[0]}
+                    data-posy={cell.pos[1]}
                   >
                     <Cell value={cell} />
                   </div>
