@@ -10,6 +10,7 @@ import {
 } from "../../utils/func";
 import { Cell } from "../Cell";
 import { Block } from "../../utils/types";
+import { TransitionGroup, CSSTransition } from "preact-transitioning";
 
 const animationDelay = 300;
 
@@ -118,7 +119,7 @@ export function GameBoard() {
       killBoard(cells);
       updateCells();
 
-      await delay(animationDelay+50);
+      await delay(animationDelay + 50);
       deleteBoard(cells);
       updateCells();
 
@@ -160,14 +161,21 @@ export function GameBoard() {
         onMouseUp={handleMouseup}
         onMouseLeave={handleMouseup}
       >
-        {cells
-          .flatMap((row) => row)
-          .map((cell, idx) => {
-            const rowIdx = Math.floor(idx / BoardSize);
-            const colIdx = Math.floor(idx % BoardSize);
+        <TransitionGroup>
+          {cells
+            .flatMap((row) => row)
+            .filter((cell) => !cell.isKilled)
+            .map((cell, idx) => {
+              const rowIdx = Math.floor(idx / BoardSize);
+              const colIdx = Math.floor(idx % BoardSize);
 
-            return <Cell value={cell} posXY={[colIdx, rowIdx]} key={cell.id} />;
-          })}
+              return (
+                <CSSTransition key={cell.id} classNames="item">
+                  <Cell value={cell} posXY={[colIdx, rowIdx]} />
+                </CSSTransition>
+              );
+            })}
+        </TransitionGroup>
       </div>
       <div>{isChecking && <span>检查!</span>}</div>
     </>
