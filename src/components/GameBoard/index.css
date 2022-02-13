@@ -1,15 +1,27 @@
-#gameboard {
-  width: 600px;
-  height: 600px;
-  overflow: hidden;
-  outline: 1px solid black;
+@media screen and (max-width: 769px) {
+  #gameboard {
+    --board-width: 96vw;
+  }
+}
 
+@media screen and (min-width: 769px) {
+  #gameboard {
+    --board-width: 600px;
+  }
+}
+
+#gameboard {
+  overflow: hidden;
   position: relative;
+
+  width: var(--board-width);
+  height: var(--board-width);
+  --cell-size: calc(var(--board-width) / var(--board-size));
 }
 
 .item-enter,
 .item-appear {
-  top: calc(var(--top) - 600px);
+  top: calc(var(--top) - 100vw);
   opacity: 0;
 }
 /* .item-appear-active {

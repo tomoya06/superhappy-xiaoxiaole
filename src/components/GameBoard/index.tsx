@@ -160,6 +160,9 @@ export function GameBoard() {
         onMouseDown={handleMousedown}
         onMouseUp={handleMouseup}
         onMouseLeave={handleMouseup}
+        style={{
+          ['--board-size']: BoardSize,
+        }}
       >
         <TransitionGroup>
           {cells
@@ -170,8 +173,10 @@ export function GameBoard() {
                   <div
                     key={cell.id}
                     style={{
-                      left: cell.pos[0] * 60,
-                      ["--top"]: `${cell.isDeleted ? 0 : cell.pos[1] * 60}px`,
+                      left: `calc(${cell.pos[0]} * var(--cell-size))`,
+                      ["--top"]: `calc(${cell.isDeleted ? 0 : cell.pos[1]} * var(--cell-size))`,
+                      width: 'var(--cell-size)',
+                      height: 'var(--cell-size)',
                     }}
                     data-posx={cell.pos[0]}
                     data-posy={cell.pos[1]}
