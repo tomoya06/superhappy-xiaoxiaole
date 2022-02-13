@@ -5,6 +5,7 @@
 
 .score-point {
   padding: 12px 0 0 0;
+  height: 80px;
 }
 
 .score-point .label {
@@ -25,8 +26,17 @@
   right: 10px;
   display: flex;
   align-items: center;
-  box-shadow: 1px 1px 10px 10px #fffbe6;
   background: #fffbe6;
+}
+
+.score-stack-plus {
+  background: #fffbe6;  
+  box-shadow: 1px 1px 10px 10px #fffbe6;
+}
+
+.score-stack-minus {
+  background: #fbd0d9;  
+  box-shadow: 1px 1px 10px 10px #fbd0d9;
 }
 
 .score-stack .cover {
@@ -38,7 +48,22 @@
 
 .score-stack .score {
   padding: 0 0 0 12px;
+  display: flex;
+  align-items: center;
+}
+
+.score-stack .score .value {
   font-size: 30px;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.score-stack .score .rate {
+  font-size: 20px;
+  line-height: 30px;
+  padding-left: 6px;
+  font-weight: 600;
+  color: #db1414;
 }
 
 .score-stack .quote {

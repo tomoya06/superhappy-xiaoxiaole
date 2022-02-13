@@ -9,6 +9,13 @@ const counterQueue: ScoreCounter[] = [];
 let consumedCounterIdx = 0;
 let visitedCounterQueueIdx = 0;
 
+// const testCounter: ScoreCounter = {
+//   value: 1,
+//   count: 5,
+//   score: 100,
+//   rate: 1.8,
+// };
+
 export function Score() {
   const [localScore, setLocalScore] = useState(0);
   const [curCounter, setCurCounter] = useState<ScoreCounter | null>(null);
@@ -72,11 +79,16 @@ export function Score() {
           ></div>
           <div>
             <div className="score">
-              <span>
+              <span className="value">
                 {isPositive && "+"}
                 {curCounter.score}
               </span>
-              {isMultiRate && <span> ×{curCounter.rate}💥</span>}
+              {isMultiRate && (
+                <>
+                  <span className="rate">×{curCounter.rate}</span>
+                  <span>💥</span>
+                </>
+              )}
             </div>
             <div className="quote">{ValueQuoteMapper[curCounter.value]}</div>
           </div>

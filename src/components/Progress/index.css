@@ -1,0 +1,55 @@
+#progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+}
+
+.progress-container {
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  bottom: 0;
+  height: 120px;
+  transition: all 1s ease;
+}
+
+.progress-myPos {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border: 0 solid transparent;
+  border-left-width: 10px;
+  border-right-width: 10px;
+  border-top: 19px solid black;
+}
+
+.progress-block {
+  width: 33.3vw;
+  height: 120px;
+  display: inline-block;
+  border-bottom: 6px solid #400588;
+  position: relative;
+}
+
+.progress-label {
+  position: absolute;
+  border-left: 1px solid rgb(56, 0, 0);
+  padding-left: 6px;
+  left: 50%;
+  bottom: 0px;
+  color: black;
+}
+
+.labelname {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.labelvalue {
+  font-size: 12px;
+  line-height: 20px;
+}
