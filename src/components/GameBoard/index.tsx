@@ -13,101 +13,33 @@ import {
 import { Cell } from "../Cell";
 import { Block, BlockWithPos } from "../../utils/types";
 import { TransitionGroup, CSSTransition } from "preact-transitioning";
+import { handleMouseFactory } from "../../utils/gesture";
 
 const animationDelay = 300;
+
+const {
+  start: doHandleMousedown,
+  finish: doHandleMouseup,
+  switch: doSwitchHandler,
+} = handleMouseFactory();
 
 export function GameBoard() {
   const [cells, setCells] = useState<BlockWithPos[]>([]);
   const [isChecking, setIsChecking] = useState(false);
-
-  let startEvt: MouseEvent | null = null;
 
   useEffect(() => {
     genBoard(BoardSize);
     updateCells();
   }, []);
 
+  useEffect(() => {
+    doSwitchHandler(isChecking);
+  }, [isChecking]);
+
   // 原地更新cells
   function updateCells() {
     const newCells = exportBoard();
     setCells(newCells);
-  }
-
-  function handleMouseMoveFinish(from: MouseEvent | null, to: MouseEvent) {
-    if (!from) {
-      return;
-    }
-    const fromXY = [from.clientX, from.clientY];
-    const toXY = [to.clientX, to.clientY];
-
-    console.log("-======-");
-    // console.log("move evt: ", from, to);
-    // console.log("move pos: ", fromXY, toXY);
-
-    let moveTarget = from.target as HTMLElement;
-    while (isNaN(Number(moveTarget.dataset["posy"]))) {
-      if (!moveTarget.parentElement) {
-        return;
-      }
-      moveTarget = moveTarget.parentElement;
-    }
-
-    const targetIdx = [
-      Number(moveTarget.dataset["posy"]),
-      Number(moveTarget.dataset["posx"]),
-    ];
-
-    // const targetIdx = [Math.floor(Math.abs(fromXY[0]) / 60), Math.floor(Math.abs(fromXY[1]) / 60)];
-
-    const moveXY = [toXY[0] - fromXY[0], toXY[1] - fromXY[1]];
-
-    makeMovement(targetIdx, moveXY);
-  }
-
-  function makeMovement(targetIdx: number[], moveXY: number[]) {
-    const swapIdx = [targetIdx[0], targetIdx[1]];
-    const moveXYabs = [Math.abs(moveXY[0]), Math.abs(moveXY[1])];
-
-    console.log("moveXY", moveXY);
-    console.log("targetIdx", targetIdx);
-
-    if (moveXYabs[0] === 0 && moveXYabs[1] === 0) {
-      return;
-    }
-
-    if (Math.max(...moveXYabs) < MoveThreshold) {
-      return;
-    }
-
-    if (moveXYabs[0] > moveXYabs[1]) {
-      // 选择水平移动
-      if (moveXY[0] > 0) {
-        swapIdx[1] += 1;
-      } else {
-        swapIdx[1] -= 1;
-      }
-    } else {
-      if (moveXY[1] > 0) {
-        swapIdx[0] += 1;
-      } else {
-        swapIdx[0] -= 1;
-      }
-    }
-
-    console.log("swapIdx", swapIdx);
-    if (
-      swapIdx[0] < 0 ||
-      swapIdx[1] < 0 ||
-      swapIdx[0] >= BoardSize ||
-      swapIdx[1] >= BoardSize
-    ) {
-      return;
-    }
-
-    swapPosition(targetIdx, swapIdx);
-    updateCells();
-
-    startCheckingJob();
   }
 
   async function startCheckingJob() {
@@ -137,22 +69,24 @@ export function GameBoard() {
     return hasKilled;
   }
 
-  function handleMousedown(evt: MouseEvent) {
-    if (isChecking) {
-      return;
-    }
-    // console.log('handleMousedown', evt);
-    startEvt = evt;
+  function handleMousedown(evt: MouseEvent | TouchEvent) {
+    // console.log("onMouseDown", evt);
+    doHandleMousedown(evt);
   }
-  function handleMouseup(evt: MouseEvent) {
-    if (isChecking) {
-      return;
-    }
-    // console.log('handleMouseup', evt);
-    handleMouseMoveFinish(startEvt, evt);
-    startEvt = null;
-  }
+  function handleMouseup(evt: MouseEvent | TouchEvent) {
+    // console.log("handleMouseup", evt);
 
+    const { swapIdx, targetIdx } = doHandleMouseup(evt);
+
+    if (!targetIdx || !swapIdx) {
+      return;
+    }
+
+    swapPosition(targetIdx, swapIdx);
+    updateCells();
+
+    startCheckingJob();
+  }
   return (
     <>
       <div
@@ -160,8 +94,11 @@ export function GameBoard() {
         onMouseDown={handleMousedown}
         onMouseUp={handleMouseup}
         onMouseLeave={handleMouseup}
+        onTouchStart={handleMousedown}
+        onTouchEnd={handleMouseup}
+        onTouchCancel={handleMouseup}
         style={{
-          ['--board-size']: BoardSize,
+          ["--board-size"]: BoardSize,
         }}
       >
         <TransitionGroup>
@@ -174,9 +111,11 @@ export function GameBoard() {
                     key={cell.id}
                     style={{
                       left: `calc(${cell.pos[0]} * var(--cell-size))`,
-                      ["--top"]: `calc(${cell.isDeleted ? 0 : cell.pos[1]} * var(--cell-size))`,
-                      width: 'var(--cell-size)',
-                      height: 'var(--cell-size)',
+                      ["--top"]: `calc(${
+                        cell.isDeleted ? 0 : cell.pos[1]
+                      } * var(--cell-size))`,
+                      width: "var(--cell-size)",
+                      height: "var(--cell-size)",
                     }}
                     data-posx={cell.pos[0]}
                     data-posy={cell.pos[1]}

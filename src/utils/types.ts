@@ -10,3 +10,16 @@ export interface BlockWithPos extends Block {
 }
 
 export type CellsMapType = Record<number, BlockWithPos>;
+
+export enum EnumGestureDirection {
+  UP = 1,
+  RIGHT,
+  DOWN,
+  LEFT,
+}
+
+export interface GestureHandler<T> {
+  switch: (flag: boolean) => void;
+  start: (evt: T) => void;
+  finish: (evt: T) => { targetIdx: number[] | null; swapIdx: number[] | null };
+}
