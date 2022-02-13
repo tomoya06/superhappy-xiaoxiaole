@@ -432,13 +432,6 @@
   resolved "https://registry.npmmirror.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
-animated-number-react@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.npmmirror.com/animated-number-react/-/animated-number-react-0.1.2.tgz#54bd219c2443b5025d734a1960c30ba7370758ae"
-  integrity sha512-NsocKXtCKk0cBFITS8lGxRo02QGr4LQLh61S1KUkeEpn30H3fj0Tqz/XSyJeZ6JLJMWOP/8MV/us2Xj9I8DnVw==
-  dependencies:
-    prop-types "^15.6.1"
-
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.npmmirror.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -786,7 +779,7 @@ preact@^10.5.15:
   resolved "https://registry.npmmirror.com/preact/-/preact-10.6.5.tgz#726d8bd12903a0d51cdd17e2e1b90cc539403e0c"
   integrity sha512-i+LXM6JiVjQXSt2jG2vZZFapGpCuk1fl8o6ii3G84MA3xgj686FKjs4JFDkmUVhtxyq21+4ay74zqPykz9hU6w==
 
-prop-types@^15.6.1, prop-types@^15.7.2:
+prop-types@^15.7.2:
   version "15.8.1"
   resolved "https://registry.npmmirror.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
