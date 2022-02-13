@@ -100,17 +100,20 @@ export function GameBoard() {
           {cells
             .filter((cell) => !cell.isDeleted)
             .map((cell) => {
+              const topVal = cell.isDeleted ? 0 : cell.pos[1];
+              const calcTop = `calc(${topVal} * var(--cell-size))`;
+              const zIndex = cell.isKilled ? 99 : 1;
+
               return (
                 <CSSTransition key={cell.id} classNames="item">
                   <div
                     key={cell.id}
                     style={{
                       left: `calc(${cell.pos[0]} * var(--cell-size))`,
-                      ["--top"]: `calc(${
-                        cell.isDeleted ? 0 : cell.pos[1]
-                      } * var(--cell-size))`,
+                      ["--top"]: calcTop,
                       width: "var(--cell-size)",
                       height: "var(--cell-size)",
+                      zIndex,
                     }}
                     data-posx={cell.pos[0]}
                     data-posy={cell.pos[1]}
