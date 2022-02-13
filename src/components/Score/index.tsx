@@ -1,14 +1,12 @@
 import { CheckBoard, ScoreCounter } from "../../utils/types";
 import AnimatedNumber from "animated-number-react";
+import { useAppSelector } from "../../store/hooks";
+
 import "./index.css";
 
-interface Props {
-  totalScore: number;
-  scoreStack: ScoreCounter[];
-}
+export function Score() {
+  const totalScore = useAppSelector((state) => state.score.totalScore);
 
-export function Score(props: Props) {
-  const { totalScore } = props;
   return (
     <div id="score">
       <div className="score-point">

@@ -14,6 +14,8 @@ import { Cell } from "../Cell";
 import { Block, BlockWithPos, CheckBoard } from "../../utils/types";
 import { TransitionGroup, CSSTransition } from "preact-transitioning";
 import { handleMouseFactory } from "../../utils/gesture";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { checkin } from "../../store/score";
 
 const animationDelay = 300;
 
@@ -23,14 +25,9 @@ const {
   switch: doSwitchHandler,
 } = handleMouseFactory();
 
-interface Props {
-  submitScore: (score: CheckBoard) => void;
-}
-
-export function GameBoard(props: Props) {
-  const { submitScore } = props;
-
+export function GameBoard() {
   const [cells, setCells] = useState<BlockWithPos[]>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     genBoard(BoardSize);
@@ -53,9 +50,13 @@ export function GameBoard(props: Props) {
 
       if (hasKilled) {
         console.log("hasNewKilled");
-        await delay(300);
+        // checkin(hasKilled);
+        dispatch({
+          type: "score/checkin",
+          payload: hasKilled,
+        });
 
-        // submitScore(hasKilled);
+        await delay(300);
 
         killBoard();
         updateCells();
