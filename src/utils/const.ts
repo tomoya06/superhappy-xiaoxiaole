@@ -5,7 +5,7 @@ import tuiqian from "../img/tuiqian.jpg";
 import wufu from "../img/wufu.jpg";
 import xinniankuaile from "../img/xinniankuaile.jpg";
 
-export const MaxValue = 6;
+export const MaxValue = 5;
 
 export const BoardSize = 8;
 
@@ -30,10 +30,10 @@ export const ValueColorMapper: Record<number, string> = {
 };
 
 export const ValueImgMapper: Record<number, string> = {
-  1: gongxi,
+  1: xinniankuaile,
   2: huhu,
   3: shule,
   4: tuiqian,
   5: wufu,
-  6: xinniankuaile,
+  6: gongxi,
 };

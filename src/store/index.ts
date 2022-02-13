@@ -5,6 +5,11 @@ const store = configureStore({
   reducer: {
     score: scoreReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: {
+      ignoreActions: true,
+    }
+  }),
 });
 
 export default store;

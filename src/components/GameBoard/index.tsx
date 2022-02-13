@@ -51,10 +51,7 @@ export function GameBoard() {
       if (hasKilled) {
         console.log("hasNewKilled");
         // checkin(hasKilled);
-        dispatch({
-          type: "score/checkin",
-          payload: hasKilled,
-        });
+        dispatch(checkin(hasKilled));
 
         await delay(300);
 
