@@ -177,4 +177,11 @@ export const calcCounterScore = (counter: ScoreCounter): number => {
   const { value, count } = counter;
 
   return ValueScoreMapper[value] * count;
-}
+};
+
+export const calcCounterRate = (counter: ScoreCounter): number => {
+  const { count } = counter;
+  const diff = count - 3;
+
+  return (diff / 10) * (2 * diff) + 1;
+};

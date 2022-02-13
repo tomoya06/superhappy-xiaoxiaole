@@ -4,9 +4,7 @@
 }
 
 .score-point {
-  display: flex;
-  align-items: flex-end;
-  height: 80px;
+  padding: 12px 0 0 0;
 }
 
 .score-point .label {

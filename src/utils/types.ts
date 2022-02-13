@@ -30,4 +30,5 @@ export interface ScoreCounter {
   value: number;
   count: number;
   score?: number;
+  rate?: number;
 }

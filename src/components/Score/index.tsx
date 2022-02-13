@@ -17,6 +17,7 @@ export function Score() {
   const scoreStack = useAppSelector((state) => state.score.scoreStack);
 
   const isPositive = curCounter && (curCounter.score || 0) > 0;
+  const isMultiRate = curCounter && (curCounter.rate || 0) > 1;
 
   let intId = -1;
 
@@ -71,8 +72,11 @@ export function Score() {
           ></div>
           <div>
             <div className="score">
-              {isPositive && "+"}
-              {curCounter.score}
+              <span>
+                {isPositive && "+"}
+                {curCounter.score}
+              </span>
+              {isMultiRate && <span> ×{curCounter.rate}💥</span>}
             </div>
             <div className="quote">{ValueQuoteMapper[curCounter.value]}</div>
           </div>
