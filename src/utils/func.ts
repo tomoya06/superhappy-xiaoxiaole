@@ -1,5 +1,11 @@
 import { MaxValue } from "./const";
-import { Block, BlockWithPos, CellsMapType } from "./types";
+import {
+  Block,
+  BlockWithPos,
+  CellsMapType,
+  CheckBoard,
+  CheckResult,
+} from "./types";
 
 let curIdx = 1;
 const cells: Block[][] = [];
@@ -61,9 +67,20 @@ export const swapPosition = (targetIdx: number[], swapIdx: number[]): void => {
   ];
 };
 
-export const checkBoard = (): boolean => {
+const addCount = (checkBoard: CheckBoard, value: number, cells: Block[]) => {
+  if (!checkBoard[value]) {
+    checkBoard[value] = new Set();
+  }
+  cells.forEach((cell) => {
+    checkBoard[value].add(cell.id);
+  });
+};
+
+export const checkBoard = (): CheckResult => {
   const MaxRow = cells.length;
   const MaxCol = cells[0].length;
+  const checkResult: CheckBoard = {};
+
   let hasKilled = false;
 
   for (let y = 0; y < MaxRow; y++) {
@@ -75,6 +92,12 @@ export const checkBoard = (): boolean => {
         cells[y][x].isKilled = true;
         cells[y][x + 1].isKilled = true;
         cells[y][x + 2].isKilled = true;
+
+        addCount(checkResult, cells[y][x].value, [
+          cells[y][x],
+          cells[y][x + 1],
+          cells[y][x + 2],
+        ]);
 
         hasKilled = true;
       }
@@ -91,12 +114,18 @@ export const checkBoard = (): boolean => {
         cells[y + 1][x].isKilled = true;
         cells[y + 2][x].isKilled = true;
 
+        addCount(checkResult, cells[y][x].value, [
+          cells[y][x],
+          cells[y + 1][x],
+          cells[y + 2][x],
+        ]);
+
         hasKilled = true;
       }
     }
   }
 
-  return hasKilled;
+  return hasKilled ? checkResult : null;
 };
 
 export const killBoard = (): void => {

@@ -7,7 +7,7 @@ import xinniankuaile from "../img/xinniankuaile.jpg";
 
 export const MaxValue = 6;
 
-export const BoardSize = 6;
+export const BoardSize = 8;
 
 export const MoveThreshold = 5;
 

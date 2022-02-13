@@ -1,5 +1,5 @@
 import "./index.css";
-import { useEffect, useState } from "preact/hooks";
+import { useCallback, useEffect, useState } from "preact/hooks";
 import { BoardSize, MoveThreshold } from "../../utils/const";
 import {
   checkBoard,
@@ -11,7 +11,7 @@ import {
   swapPosition,
 } from "../../utils/func";
 import { Cell } from "../Cell";
-import { Block, BlockWithPos } from "../../utils/types";
+import { Block, BlockWithPos, CheckBoard } from "../../utils/types";
 import { TransitionGroup, CSSTransition } from "preact-transitioning";
 import { handleMouseFactory } from "../../utils/gesture";
 
@@ -23,7 +23,13 @@ const {
   switch: doSwitchHandler,
 } = handleMouseFactory();
 
-export function GameBoard() {
+interface Props {
+  submitScore: (score: CheckBoard) => void;
+}
+
+export function GameBoard(props: Props) {
+  const { submitScore } = props;
+
   const [cells, setCells] = useState<BlockWithPos[]>([]);
 
   useEffect(() => {
@@ -39,29 +45,30 @@ export function GameBoard() {
 
   async function startCheckingJob() {
     doSwitchHandler(true);
-    while (await startChecking()) {}
-    doSwitchHandler(false);
-  }
-
-  async function startChecking() {
-    await delay(animationDelay);
-    const hasKilled = checkBoard();
-    updateCells();
-
-    if (hasKilled) {
-      console.log("hasNewKilled");
-      await delay(300);
-
-      killBoard();
+    let isFinished = false;
+    while (!isFinished) {
+      await delay(animationDelay);
+      const hasKilled = checkBoard();
       updateCells();
 
-      deleteBoard();
-      updateCells();
+      if (hasKilled) {
+        console.log("hasNewKilled");
+        await delay(300);
 
-      await delay(1000);
+        // submitScore(hasKilled);
+
+        killBoard();
+        updateCells();
+
+        deleteBoard();
+        updateCells();
+
+        await delay(1000);
+      }
+
+      isFinished = !hasKilled;
     }
-
-    return hasKilled;
+    doSwitchHandler(false);
   }
 
   function handleMousedown(evt: MouseEvent | TouchEvent) {
