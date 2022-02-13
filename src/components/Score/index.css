@@ -6,6 +6,7 @@
 .score-point {
   display: flex;
   align-items: flex-end;
+  height: 80px;
 }
 
 .score-point .label {
@@ -18,7 +19,6 @@
   text-align: end;
   font-weight: 600;
 }
-
 
 /* 幻灯片 */
 .score-stack {
@@ -43,28 +43,7 @@
   font-size: 30px;
 }
 
-.stackcss-enter,
-.stackcss-appear {
-  top: 0px;
-  opacity: 0;
-}
-/* .stackcss-appear-active {
-  transition: all 100ms ease;
-}
-.stackcss-enter-active {
-  transition: all 100ms ease;
-} */
-.stackcss-enter-done,
-.stackcss-appear-done {
-  opacity: 1;
-  transition: all 100ms ease;
-}
-/* .stackcss-exit {
-  opacity: 0;
-} */
-.stackcss-exit-active,
-.stackcss-exit-done {
-  top: -100px;
-  transition: all 200ms ease;
-  opacity: 0;
+.score-stack .quote {
+  font-size: 14px;
+  padding: 12px 0 0 12px;
 }

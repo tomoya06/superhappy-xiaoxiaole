@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import "./index.css";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import { ScoreCounter } from "../../utils/types";
-import { ValueImgMapper } from "../../utils/const";
+import { ValueImgMapper, ValueQuoteMapper } from "../../utils/const";
 
 const counterQueue: ScoreCounter[] = [];
 let consumedCounterIdx = 0;
@@ -48,7 +48,7 @@ export function Score() {
   return (
     <div id="score">
       <div className="score-point">
-        <span className="label">战力</span>
+        <span className="label">球队战力</span>
         <AnimatedNumbers
           animateToNumber={localScore}
           fontStyle={{
@@ -69,9 +69,12 @@ export function Score() {
               backgroundImage: `url(${ValueImgMapper[curCounter.value]})`,
             }}
           ></div>
-          <div className="score">
-            {isPositive && "+"}
-            {curCounter.score}
+          <div>
+            <div className="score">
+              {isPositive && "+"}
+              {curCounter.score}
+            </div>
+            <div className="quote">{ValueQuoteMapper[curCounter.value]}</div>
           </div>
         </div>
       )}

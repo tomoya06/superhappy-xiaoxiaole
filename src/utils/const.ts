@@ -7,7 +7,7 @@ import xinniankuaile from "../img/xinniankuaile.jpg";
 
 export const MaxValue = 6;
 
-export const BoardSize = 8;
+export const BoardSize = 6;
 
 export const MoveThreshold = 5;
 
@@ -34,3 +34,13 @@ export const ValueImgMapper = [
 ];
 
 export const ValueScoreMapper = [0, 1000, 200, -100, -200, 300, 500];
+
+export const ValueQuoteMapper = [
+  "",
+  "新 年 快 乐 ！",
+  "眼镜哥の衷心呐喊",
+  "再这样下去...",
+  "xxx! xx!",
+  "独中五元！",
+  "哎哟！",
+];
