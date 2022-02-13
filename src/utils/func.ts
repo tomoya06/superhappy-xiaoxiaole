@@ -1,10 +1,11 @@
-import { MaxValue } from "./const";
+import { MaxValue, ValueScoreMapper } from "./const";
 import {
   Block,
   BlockWithPos,
   CellsMapType,
   CheckBoard,
   CheckResult,
+  ScoreCounter,
 } from "./types";
 
 let curIdx = 1;
@@ -171,3 +172,9 @@ export const delay = async (int: number) => {
 
   await p;
 };
+
+export const calcCounterScore = (counter: ScoreCounter): number => {
+  const { value, count } = counter;
+
+  return ValueScoreMapper[value] * count;
+}

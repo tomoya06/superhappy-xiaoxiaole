@@ -1,5 +1,6 @@
 #score {
   margin: 12px 0;
+  position: relative;
 }
 
 .score-point {
@@ -16,4 +17,54 @@
   font-size: 30px;
   text-align: end;
   font-weight: 600;
+}
+
+
+/* 幻灯片 */
+.score-stack {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: 1px 1px 10px 10px #fffbe6;
+  background: #fffbe6;
+}
+
+.score-stack .cover {
+  width: 80px;
+  height: 80px;
+  background-position: center;
+  background-size: cover;
+}
+
+.score-stack .score {
+  padding: 0 0 0 12px;
+  font-size: 30px;
+}
+
+.stackcss-enter,
+.stackcss-appear {
+  top: 0px;
+  opacity: 0;
+}
+/* .stackcss-appear-active {
+  transition: all 100ms ease;
+}
+.stackcss-enter-active {
+  transition: all 100ms ease;
+} */
+.stackcss-enter-done,
+.stackcss-appear-done {
+  opacity: 1;
+  transition: all 100ms ease;
+}
+/* .stackcss-exit {
+  opacity: 0;
+} */
+.stackcss-exit-active,
+.stackcss-exit-done {
+  top: -100px;
+  transition: all 200ms ease;
+  opacity: 0;
 }

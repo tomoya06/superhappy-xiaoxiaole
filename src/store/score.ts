@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { calcCounterScore } from "../utils/func";
 import { CheckBoard, CheckResult, ScoreCounter } from "../utils/types";
 
 // Define a type for the slice state
@@ -32,17 +33,22 @@ export const scoreSlice = createSlice({
           value: Number(value),
           count: action.payload[value].size,
         };
+
+        newItem.score = calcCounterScore(newItem);
         newStack.push(newItem);
 
-        diff += newItem.count * 1000;
+        diff += newItem.score;
       }
 
       state.totalScore += diff;
       state.scoreStack = [...state.scoreStack, ...newStack];
     },
+    consumeStack: (state) => {
+      state.scoreStack = state.scoreStack.slice(1);
+    },
   },
 });
 
-export const { checkin } = scoreSlice.actions
+export const { checkin, consumeStack } = scoreSlice.actions;
 
-export default scoreSlice.reducer
+export default scoreSlice.reducer;

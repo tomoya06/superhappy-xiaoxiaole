@@ -29,4 +29,5 @@ export interface GestureHandler<T> {
 export interface ScoreCounter {
   value: number;
   count: number;
+  score?: number;
 }
