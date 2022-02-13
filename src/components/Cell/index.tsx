@@ -16,7 +16,7 @@ export function Cell(props: { value: Block }) {
         }}
       >
         <div class="cell-value">{ValueIconMapper[value.value]}</div>
-        <div class="cell-id">{value.id}</div>
+        {/* <div class="cell-id">{value.id}</div> */}
       </div>
     </div>
   );

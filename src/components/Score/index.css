@@ -1,0 +1,19 @@
+#score {
+  margin: 12px 0;
+}
+
+.score-point {
+  display: flex;
+  align-items: flex-end;
+}
+
+.score-point .label {
+  font-size: 12px;
+  padding: 0 4px 4px 0;
+}
+
+.score-point .value {
+  font-size: 30px;
+  text-align: end;
+  font-weight: 600;
+}

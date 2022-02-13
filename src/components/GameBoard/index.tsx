@@ -25,16 +25,11 @@ const {
 
 export function GameBoard() {
   const [cells, setCells] = useState<BlockWithPos[]>([]);
-  const [isChecking, setIsChecking] = useState(false);
 
   useEffect(() => {
     genBoard(BoardSize);
     updateCells();
   }, []);
-
-  useEffect(() => {
-    doSwitchHandler(isChecking);
-  }, [isChecking]);
 
   // 原地更新cells
   function updateCells() {
@@ -43,9 +38,9 @@ export function GameBoard() {
   }
 
   async function startCheckingJob() {
-    setIsChecking(true);
+    doSwitchHandler(true);
     while (await startChecking()) {}
-    setIsChecking(false);
+    doSwitchHandler(false);
   }
 
   async function startChecking() {
@@ -127,7 +122,6 @@ export function GameBoard() {
             })}
         </TransitionGroup>
       </div>
-      <div>{isChecking && <span>检查!</span>}</div>
     </>
   );
 }
