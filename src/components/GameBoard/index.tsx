@@ -164,14 +164,23 @@ export function GameBoard() {
         <TransitionGroup>
           {cells
             .flatMap((row) => row)
-            .filter((cell) => !cell.isKilled)
+            .filter((cell) => !cell.isDeleted || !cell.isKilled)
             .map((cell, idx) => {
               const rowIdx = Math.floor(idx / BoardSize);
               const colIdx = Math.floor(idx % BoardSize);
 
               return (
                 <CSSTransition key={cell.id} classNames="item">
-                  <Cell value={cell} posXY={[colIdx, rowIdx]} />
+                  <div
+                    style={{
+                      left: colIdx * 60,
+                      ["--top"]: `${rowIdx * 60}px`,
+                    }}
+                    data-posx={colIdx}
+                    data-posy={rowIdx}
+                  >
+                    <Cell value={cell} />
+                  </div>
                 </CSSTransition>
               );
             })}

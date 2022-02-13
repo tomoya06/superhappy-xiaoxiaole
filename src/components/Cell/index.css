@@ -3,9 +3,7 @@
   height: 60px;
   border: 1px solid red;
   box-sizing: border-box;
-
-  position: absolute;
-  transition: all 300ms ease-in-out;
+  transition: background-color 300ms ease;
 }
 
 .cell-container {
@@ -16,8 +14,6 @@
   justify-content: center;
   align-items: center;
   user-select: none;
-
-  transition: all 300ms ease-in-out;
 }
 
 .cell-value {
@@ -26,26 +22,4 @@
 
 .cell-id {
   font-size: 12px;
-}
-
-.item-enter {
-  top: -100px;
-  opacity: 0;
-}
-.item-enter-active {
-  opacity: 1;
-  top: var(--top);
-  transition: all 500ms ease;
-}
-.item-enter-done,
-.item-appear-done {
-  top: var(--top);
-}
-.item-exit {
-  top: var(--top);
-  opacity: 1;
-}
-.item-exit-active {
-  opacity: 0;
-  transition: all 500ms ease;
 }
