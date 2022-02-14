@@ -4,6 +4,7 @@ import shule from "../img/shule.jpg";
 import tuiqian from "../img/tuiqian.jpg";
 import wufu from "../img/wufu.jpg";
 import xinniankuaile from "../img/xinniankuaile.jpg";
+import dunan from "../img/dunan.jpg";
 
 export const MaxValue = 6;
 
@@ -28,7 +29,7 @@ export const ValueImgMapper = [
   xinniankuaile,
   huhu,
   shule,
-  tuiqian,
+  dunan,
   wufu,
   gongxi,
 ];
@@ -40,7 +41,7 @@ export const ValueQuoteMapper = [
   "新 年 快 乐 ！",
   "眼镜哥の呐喊",
   "再这样下去...",
-  "xxx! xx!",
+  "今天练了块腹肌",
   "独中五元！",
   "哎哟！",
 ];
