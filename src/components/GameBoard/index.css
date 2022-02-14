@@ -10,9 +10,14 @@
   }
 }
 
+.gameboard-container {
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+
 #gameboard {
   position: relative;
-
   width: var(--board-width);
   height: var(--board-width);
   --cell-size: calc(var(--board-width) / var(--board-size));

@@ -88,7 +88,7 @@ export function GameBoard() {
     startCheckingJob();
   }
   return (
-    <>
+    <div className="gameboard-container">
       <div
         id="gameboard"
         onMouseDown={handleMousedown}
@@ -130,6 +130,6 @@ export function GameBoard() {
             })}
         </TransitionGroup>
       </div>
-    </>
+    </div>
   );
 }
