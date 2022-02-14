@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { calcCounterRate, calcCounterScore } from "../utils/func";
+import { getScoreFromStorage, saveScoreToStorage } from "../utils/storage";
 import { CheckBoard, CheckResult, ScoreCounter } from "../utils/types";
 
 // Define a type for the slice state
@@ -10,7 +11,7 @@ interface CounterState {
 
 // Define the initial state using that type
 const initialState: CounterState = {
-  totalScore: 0,
+  totalScore: getScoreFromStorage(),
   scoreStack: [],
 };
 
@@ -43,6 +44,8 @@ export const scoreSlice = createSlice({
 
       state.totalScore += diff;
       state.scoreStack = [...state.scoreStack, ...newStack];
+
+      saveScoreToStorage(state.totalScore);
     },
     consumeStack: (state) => {
       state.scoreStack = state.scoreStack.slice(1);
