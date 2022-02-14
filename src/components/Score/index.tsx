@@ -4,6 +4,7 @@ import "./index.css";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import { ScoreCounter } from "../../utils/types";
 import { ValueImgMapper, ValueQuoteMapper } from "../../utils/const";
+import { LoadingSoccer } from "../LoadingSoccer";
 
 const counterQueue: ScoreCounter[] = [];
 let consumedCounterIdx = 0;
@@ -22,6 +23,7 @@ export function Score() {
 
   const totalScore = useAppSelector((state) => state.score.totalScore);
   const scoreStack = useAppSelector((state) => state.score.scoreStack);
+  const isChecking = useAppSelector((state) => state.game.isChecking);
 
   const isPositive = curCounter && (curCounter.score || 0) > 0;
   const isMultiRate = curCounter && (curCounter.rate || 0) > 1;
@@ -56,7 +58,10 @@ export function Score() {
   return (
     <div id="score">
       <div className="score-point">
-        <span className="label">球队战力</span>
+        <div className="soccer-label">
+          <span className="label">球队战力</span>
+          {isChecking && <LoadingSoccer />}
+        </div>
         <AnimatedNumbers
           animateToNumber={localScore}
           fontStyle={{

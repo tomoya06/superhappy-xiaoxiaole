@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import scoreReducer from "./score";
+import gameReducer from './game';
 
 const store = configureStore({
   reducer: {
     score: scoreReducer,
+    game: gameReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: {

@@ -16,6 +16,7 @@ import { TransitionGroup, CSSTransition } from "preact-transitioning";
 import { handleMouseFactory } from "../../utils/gesture";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { checkin } from "../../store/score";
+import { updateChecking } from "../../store/game";
 
 const animationDelay = 300;
 
@@ -40,8 +41,13 @@ export function GameBoard() {
     setCells(newCells);
   }
 
+  function triggerChecking(flag: boolean) {
+    doSwitchHandler(flag);
+    dispatch(updateChecking(flag));
+  }
+
   async function startCheckingJob() {
-    doSwitchHandler(true);
+    triggerChecking(true);
     let isFinished = false;
     while (!isFinished) {
       await delay(animationDelay);
@@ -66,7 +72,7 @@ export function GameBoard() {
 
       isFinished = !hasKilled;
     }
-    doSwitchHandler(false);
+    triggerChecking(false);
   }
 
   function handleMousedown(evt: MouseEvent | TouchEvent) {

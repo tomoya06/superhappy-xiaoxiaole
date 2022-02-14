@@ -4,13 +4,21 @@
 }
 
 .score-point {
-  padding: 12px 0 0 0;
+  padding: 2px 0 0 0;
   height: 80px;
+}
+
+.soccer-label {
+  display: flex;
+  height: 16px;
+  align-items: flex-end;
+  margin-bottom: 6px;
 }
 
 .score-point .label {
   font-size: 12px;
-  padding: 0 4px 4px 0;
+  line-height: 12px;
+  margin-right: 4px;
 }
 
 .score-point .value {
