@@ -47,6 +47,7 @@ export function GameBoard() {
   }
 
   async function startCheckingJob(targetCellValue: number) {
+    let isManual = true;
     triggerChecking(true);
     let isFinished = false;
     while (!isFinished) {
@@ -70,8 +71,11 @@ export function GameBoard() {
       } else {
         console.log("no killed");
 
-        dispatch(idleMove(targetCellValue));
+        if (isManual) {
+          dispatch(idleMove(targetCellValue));
+        }
       }
+      isManual = false;
 
       isFinished = !hasKilled;
     }
