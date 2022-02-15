@@ -201,6 +201,6 @@ export const calcIdleMoveScore = (counter: ScoreCounter): number => {
 export const calcIdleMoveRate = (counter: ScoreCounter): number => {
   const { count } = counter;
 
-  const rate = Math.random() * count;
+  const rate = Math.random() * count * 0.4;
   return Math.floor(rate * 10) / 10;
 };
