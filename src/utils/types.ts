@@ -11,6 +11,7 @@ export interface BlockWithPos extends Block {
 
 export type CellsMapType = Record<number, BlockWithPos>;
 export type CheckBoard = Record<number, Set<number>>;
+export type idleMove = number;
 export type CheckResult = CheckBoard | null;
 
 export enum EnumGestureDirection {
@@ -31,4 +32,5 @@ export interface ScoreCounter {
   count: number;
   score?: number;
   rate?: number;
+  quote: string;
 }

@@ -13,7 +13,7 @@ const cells: Block[][] = [];
 const cellsMap: CellsMapType = {};
 
 const genRandomValue = (): number => {
-  return Math.floor(Math.random() * MaxValue) + 1;
+  return Math.floor(Math.random() * MaxValue);
 };
 
 const genRandomBlock = (): Block => {
@@ -61,11 +61,17 @@ export const exportBoard = (): BlockWithPos[] => {
   return res;
 };
 
-export const swapPosition = (targetIdx: number[], swapIdx: number[]): void => {
+export const swapPosition = (
+  targetIdx: number[],
+  swapIdx: number[]
+): number => {
+  const targetCellValue = cells[targetIdx[0]][targetIdx[1]].value;
   [cells[targetIdx[0]][targetIdx[1]], cells[swapIdx[0]][swapIdx[1]]] = [
     cells[swapIdx[0]][swapIdx[1]],
     cells[targetIdx[0]][targetIdx[1]],
   ];
+
+  return targetCellValue;
 };
 
 const addCount = (checkBoard: CheckBoard, value: number, cells: Block[]) => {
@@ -184,4 +190,17 @@ export const calcCounterRate = (counter: ScoreCounter): number => {
   const diff = count - 3;
 
   return (diff / 10) * (2 * diff) + 1;
+};
+
+export const calcIdleMoveScore = (counter: ScoreCounter): number => {
+  const { value } = counter;
+
+  return -Math.abs(ValueScoreMapper[value]);
+};
+
+export const calcIdleMoveRate = (counter: ScoreCounter): number => {
+  const { count } = counter;
+
+  const rate = Math.random() * count;
+  return Math.floor(rate * 10) / 10;
 };

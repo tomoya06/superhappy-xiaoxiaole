@@ -15,7 +15,7 @@ import { Block, BlockWithPos, CheckBoard } from "../../utils/types";
 import { TransitionGroup, CSSTransition } from "preact-transitioning";
 import { handleMouseFactory } from "../../utils/gesture";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { checkin } from "../../store/score";
+import { checkin, idleMove } from "../../store/score";
 import { updateChecking } from "../../store/game";
 
 const animationDelay = 300;
@@ -46,7 +46,7 @@ export function GameBoard() {
     dispatch(updateChecking(flag));
   }
 
-  async function startCheckingJob() {
+  async function startCheckingJob(targetCellValue: number) {
     triggerChecking(true);
     let isFinished = false;
     while (!isFinished) {
@@ -56,7 +56,6 @@ export function GameBoard() {
 
       if (hasKilled) {
         console.log("hasNewKilled");
-        // checkin(hasKilled);
         dispatch(checkin(hasKilled));
 
         await delay(300);
@@ -68,6 +67,10 @@ export function GameBoard() {
         updateCells();
 
         await delay(1000);
+      } else {
+        console.log("no killed");
+
+        dispatch(idleMove(targetCellValue));
       }
 
       isFinished = !hasKilled;
@@ -88,10 +91,10 @@ export function GameBoard() {
       return;
     }
 
-    swapPosition(targetIdx, swapIdx);
+    const targetCellValue = swapPosition(targetIdx, swapIdx);
     updateCells();
 
-    startCheckingJob();
+    startCheckingJob(targetCellValue);
   }
   return (
     <div className="gameboard-container">

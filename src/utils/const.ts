@@ -1,7 +1,6 @@
 import gongxi from "../img/gongxi.jpg";
-import huhu from "../img/huhu.jpg";
 import shule from "../img/shule.jpg";
-import tuiqian from "../img/tuiqian.jpg";
+import haishen from "../img/haishen.png";
 import wufu from "../img/wufu.jpg";
 import xinniankuaile from "../img/xinniankuaile.jpg";
 import dunan from "../img/dunan.jpg";
@@ -12,10 +11,9 @@ export const BoardSize = 6;
 
 export const MoveThreshold = 5;
 
-export const ValueIconMapper = ["", "1", "2", "3", "4", "5", "6"];
+export const ValueIconMapper = ["1", "2", "3", "4", "5", "6"];
 
 export const ValueColorMapper = [
-  "",
   "orange",
   "lightgreen",
   "yellow",
@@ -25,25 +23,32 @@ export const ValueColorMapper = [
 ];
 
 export const ValueImgMapper = [
-  "",
   xinniankuaile,
-  huhu,
+  haishen,
   shule,
   dunan,
   wufu,
   gongxi,
 ];
 
-export const ValueScoreMapper = [0, 1000, 200, -100, -200, 300, 500];
+export const ValueScoreMapper = [1000, 200, -100, -200, 300, 500];
 
 export const ValueQuoteMapper = [
-  "",
-  "新 年 快 乐 ！",
-  "眼镜哥の呐喊",
+  "新 年 快 乐！",
+  `“平时会吃吗？”`,
   "再这样下去...",
   "今天练了块腹肌",
   "独中五元！",
   "哎哟！",
+];
+
+export const ValueNegQuoteMapper = [
+  "xxx! xx!!!",
+  "还是吃太多了",
+  "还有机会",
+  "肚腩攻击",
+  "漏了五个球",
+  "谢天谢地！",
 ];
 
 export const ProgressMarker: [number, string][] = [

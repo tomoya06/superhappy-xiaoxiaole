@@ -95,7 +95,7 @@ export function Score() {
                 </>
               )}
             </div>
-            <div className="quote">{ValueQuoteMapper[curCounter.value]}</div>
+            <div className="quote">{curCounter.quote}</div>
           </div>
         </div>
       )}
