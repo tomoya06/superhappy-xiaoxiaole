@@ -52,7 +52,7 @@ export const scoreSlice = createSlice({
         diff += newItem.score * newItem.rate;
       }
 
-      state.totalScore += diff;
+      state.totalScore = Math.floor(state.totalScore + diff);
       state.scoreStack = [...state.scoreStack, ...newStack];
 
       saveScoreToStorage(state.totalScore);
@@ -69,7 +69,7 @@ export const scoreSlice = createSlice({
       newItem.rate = calcIdleMoveRate(newItem);
 
       const diff = newItem.score * newItem.rate;
-      state.totalScore += diff;
+      state.totalScore = Math.floor(state.totalScore + diff);
       state.scoreStack = [...state.scoreStack, newItem];
 
       saveScoreToStorage(state.totalScore);

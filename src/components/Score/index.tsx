@@ -63,7 +63,7 @@ export function Score() {
           {isChecking && <LoadingSoccer />}
         </div>
         <AnimatedNumbers
-          animateToNumber={Math.floor(localScore)}
+          animateToNumber={localScore}
           fontStyle={{
             fontSize: 40,
             fontWeight: 600,
