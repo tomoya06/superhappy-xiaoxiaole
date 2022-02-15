@@ -1,0 +1,18 @@
+.game-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: #00000066;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-modal-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
