@@ -12,9 +12,8 @@ export function Header() {
         ⚽玩法介绍
       </div>
 
-      <Modal show={showModal} onClose={() => setShowModal(false)}>
+      <Modal show={showModal} onClose={() => setShowModal(false)} title={'⚽玩法介绍⚽'} >
         <>
-          <div className="helper-title">⚽玩法介绍⚽</div>
           <div>
             <p>
               比开心消消乐还要开心的男足消消乐

@@ -1,5 +1,8 @@
-import { BoardSize, MoveThreshold } from "./const";
+import { MoveThreshold } from "./const";
+import { getSizeFromStorage } from "./storage";
 import { GestureHandler } from "./types";
+
+const boardSize = getSizeFromStorage();
 
 function makeMovement(targetIdx: number[], moveXY: number[]): number[] | null {
   const swapIdx = [targetIdx[0], targetIdx[1]];
@@ -35,8 +38,8 @@ function makeMovement(targetIdx: number[], moveXY: number[]): number[] | null {
   if (
     swapIdx[0] < 0 ||
     swapIdx[1] < 0 ||
-    swapIdx[0] >= BoardSize ||
-    swapIdx[1] >= BoardSize
+    swapIdx[0] >= boardSize ||
+    swapIdx[1] >= boardSize
   ) {
     return null;
   }

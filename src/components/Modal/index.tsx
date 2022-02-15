@@ -5,9 +5,10 @@ export function Modal(
   props: RenderableProps<{
     show: boolean;
     onClose: () => void;
+    title: string;
   }>
 ) {
-  const { children, show, onClose } = props;
+  const { children, show, onClose, title } = props;
 
   return (
     <div
@@ -17,7 +18,10 @@ export function Modal(
         display: show ? "flex" : "none",
       }}
     >
-      <div className="game-modal-container">{children}</div>
+      <div className="game-modal-container">
+        <div className="game-modal-title">{title}</div>
+        {children}
+      </div>
     </div>
   );
 }

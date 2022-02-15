@@ -1,6 +1,5 @@
 import "./index.css";
-import { useCallback, useEffect, useState } from "preact/hooks";
-import { BoardSize, MoveThreshold } from "../../utils/const";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import {
   checkBoard,
   delay,
@@ -11,12 +10,13 @@ import {
   swapPosition,
 } from "../../utils/func";
 import { Cell } from "../Cell";
-import { Block, BlockWithPos, CheckBoard } from "../../utils/types";
+import { BlockWithPos } from "../../utils/types";
 import { TransitionGroup, CSSTransition } from "preact-transitioning";
 import { handleMouseFactory } from "../../utils/gesture";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { useAppDispatch } from "../../store/hooks";
 import { checkin, idleMove } from "../../store/score";
 import { updateChecking } from "../../store/game";
+import { getSizeFromStorage } from "../../utils/storage";
 
 const animationDelay = 300;
 
@@ -30,8 +30,12 @@ export function GameBoard() {
   const [cells, setCells] = useState<BlockWithPos[]>([]);
   const dispatch = useAppDispatch();
 
+  const boardSize = useMemo(() => {
+    return getSizeFromStorage();
+  }, []);
+
   useEffect(() => {
-    genBoard(BoardSize);
+    genBoard(boardSize);
     updateCells();
   }, []);
 
@@ -111,7 +115,7 @@ export function GameBoard() {
         onTouchEnd={handleMouseup}
         onTouchCancel={handleMouseup}
         style={{
-          ["--board-size"]: BoardSize,
+          ["--board-size"]: boardSize,
         }}
       >
         <TransitionGroup>
