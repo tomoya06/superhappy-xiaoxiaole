@@ -192,9 +192,18 @@ export const calcCounterRate = (
   const { count, value } = counter;
   let diff = count - 3;
 
-  const buff = Math.sqrt(curScore / 500000) * 3;
-  if (buff >= 1 && ValueScoreMapper[value] > 0) {
-    diff += buff * Math.random();
+  const curStep = Math.pow(10, curScore.toString().length - 2);
+
+  const buff =
+    Math.sqrt(curScore / (curStep / 2)) *
+    Math.pow(1.2, Math.sqrt(curScore / curStep) + 1) *
+    4;
+  if (buff >= 1) {
+    if (ValueScoreMapper[value] > 0) {
+      diff += buff * Math.random();
+    } else {
+      diff += buff * Math.random() * 0.6;
+    }
   }
 
   const rate = (diff / 10) * (2 * diff) + 1;
