@@ -2,6 +2,7 @@ import AnimatedNumbers from "react-animated-numbers";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import "./index.css";
 import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
+import { memo } from "preact/compat";
 import { ScoreCounter } from "../../utils/types";
 import {
   DefaultBoardSize,
@@ -22,12 +23,9 @@ const counterQueue: ScoreCounter[] = [];
 let consumedCounterIdx = 0;
 let visitedCounterQueueIdx = 0;
 
-// const testCounter: ScoreCounter = {
-//   value: 1,
-//   count: 5,
-//   score: 100,
-//   rate: 1.8,
-// };
+const ScoreNumber = memo(AnimatedNumbers, (prevProps, nextProps) => {
+  return prevProps.animateToNumber === nextProps.animateToNumber;
+})
 
 export function Score() {
   const [localScore, setLocalScore] = useState(0);
@@ -97,14 +95,14 @@ export function Score() {
           <span className="label">球队战力</span>
           {isChecking && <LoadingSoccer />}
         </div>
-        <div style={{ fontSize: 40, fontWeight: 600 }}>{localScore}</div>
-        {/* <AnimatedNumbers
+        {/* <div style={{ fontSize: 40, fontWeight: 600 }}>{localScore}</div> */}
+        <ScoreNumber
           animateToNumber={localScore}
           fontStyle={{
             fontSize: 40,
             fontWeight: 600,
           }}
-        /> */}
+        />
       </div>
       <Modal
         show={showModal}
