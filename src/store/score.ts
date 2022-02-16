@@ -12,16 +12,20 @@ import { CheckBoard, CheckResult, ScoreCounter } from "../utils/types";
 // Define a type for the slice state
 interface CounterState {
   totalScore: number;
-  scoreStack: ScoreCounter[];
   idleMoveCount: number;
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
   totalScore: getScoreFromStorage(),
-  scoreStack: [],
   idleMoveCount: 0,
 };
+
+const scoreStack: ScoreCounter[] = [];
+
+export const consumeStack = (): ScoreCounter | undefined => {
+  return scoreStack.shift();
+}
 
 export const scoreSlice = createSlice({
   name: "score",
@@ -29,9 +33,6 @@ export const scoreSlice = createSlice({
   reducers: {
     addScore: (state, action: PayloadAction<number>) => {
       state.totalScore += action.payload;
-    },
-    addStack: (state, action: PayloadAction<ScoreCounter[]>) => {
-      state.scoreStack = [...state.scoreStack, ...action.payload];
     },
     checkin: (state, action: PayloadAction<CheckBoard>) => {
       state.idleMoveCount = 0;
@@ -53,7 +54,7 @@ export const scoreSlice = createSlice({
       }
 
       state.totalScore = Math.floor(state.totalScore + diff);
-      state.scoreStack = [...state.scoreStack, ...newStack];
+      scoreStack.push(...newStack);
 
       saveScoreToStorage(state.totalScore);
     },
@@ -70,16 +71,13 @@ export const scoreSlice = createSlice({
 
       const diff = newItem.score * newItem.rate;
       state.totalScore = Math.floor(state.totalScore + diff);
-      state.scoreStack = [...state.scoreStack, newItem];
+      scoreStack.push(newItem);
 
       saveScoreToStorage(state.totalScore);
-    },
-    consumeStack: (state) => {
-      state.scoreStack = state.scoreStack.slice(1);
     },
   },
 });
 
-export const { checkin, consumeStack, idleMove } = scoreSlice.actions;
+export const { checkin, idleMove } = scoreSlice.actions;
 
 export default scoreSlice.reducer;

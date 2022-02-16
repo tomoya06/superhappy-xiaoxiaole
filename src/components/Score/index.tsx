@@ -18,10 +18,7 @@ import {
   saveScoreToStorage,
   saveSizeToStorage,
 } from "../../utils/storage";
-
-const counterQueue: ScoreCounter[] = [];
-let consumedCounterIdx = 0;
-let visitedCounterQueueIdx = 0;
+import { consumeStack } from "../../store/score";
 
 const ScoreNumber = memo(AnimatedNumbers, (prevProps, nextProps) => {
   return prevProps.animateToNumber === nextProps.animateToNumber;
@@ -29,14 +26,15 @@ const ScoreNumber = memo(AnimatedNumbers, (prevProps, nextProps) => {
 
 export function Score() {
   const [localScore, setLocalScore] = useState(0);
-  const [curCounter, setCurCounter] = useState<ScoreCounter | null>(null);
+  const [curCounter, setCurCounter] = useState<ScoreCounter | undefined>(
+    undefined
+  );
 
   const [showModal, setShowModal] = useState(false);
   const [boardsize, setBoardsize] = useState(getSizeFromStorage());
   const [resetTeam, setResetTeam] = useState(false);
 
   const totalScore = useAppSelector((state) => state.score.totalScore);
-  const scoreStack = useAppSelector((state) => state.score.scoreStack);
   const isChecking = useAppSelector((state) => state.game.isChecking);
   const curBoardsize = useMemo(() => {
     return getSizeFromStorage();
@@ -52,25 +50,15 @@ export function Score() {
   }, [totalScore]);
 
   useEffect(() => {
-    queueUp(scoreStack.slice(consumedCounterIdx));
-  }, [scoreStack]);
-
-  useEffect(() => {
     intId = setInterval(() => {
-      if (counterQueue[visitedCounterQueueIdx]) {
-        setCurCounter(counterQueue[visitedCounterQueueIdx++]);
-      }
+      const newItem = consumeStack();
+      setCurCounter(newItem);
     }, 800);
 
     return () => {
       clearInterval(intId);
     };
   }, []);
-
-  const queueUp = (subQueue: ScoreCounter[]) => {
-    counterQueue.push(...subQueue);
-    consumedCounterIdx = counterQueue.length;
-  };
 
   const handleConfirm = () => {
     let isChanged = false;
