@@ -185,11 +185,21 @@ export const calcCounterScore = (counter: ScoreCounter): number => {
   return ValueScoreMapper[value] * count;
 };
 
-export const calcCounterRate = (counter: ScoreCounter): number => {
-  const { count } = counter;
-  const diff = count - 3;
+export const calcCounterRate = (
+  counter: ScoreCounter,
+  curScore: number
+): number => {
+  const { count, value } = counter;
+  let diff = count - 3;
 
-  return (diff / 10) * (2 * diff) + 1;
+  const buff = Math.sqrt(curScore / 500000) * 3;
+  if (buff >= 1 && ValueScoreMapper[value] > 0) {
+    diff += buff * Math.random();
+  }
+
+  const rate = (diff / 10) * (2 * diff) + 1;
+
+  return Math.floor(rate * 10) / 10;
 };
 
 export const calcIdleMoveScore = (counter: ScoreCounter): number => {
@@ -198,7 +208,10 @@ export const calcIdleMoveScore = (counter: ScoreCounter): number => {
   return -Math.abs(ValueScoreMapper[value]);
 };
 
-export const calcIdleMoveRate = (counter: ScoreCounter): number => {
+export const calcIdleMoveRate = (
+  counter: ScoreCounter,
+  curScore: number
+): number => {
   const { count } = counter;
 
   const rate = Math.random() * count * 0.4;

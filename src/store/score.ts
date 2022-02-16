@@ -46,7 +46,7 @@ export const scoreSlice = createSlice({
         };
 
         newItem.score = calcCounterScore(newItem);
-        newItem.rate = calcCounterRate(newItem);
+        newItem.rate = calcCounterRate(newItem, state.totalScore);
         newStack.push(newItem);
 
         diff += newItem.score * newItem.rate;
@@ -66,7 +66,7 @@ export const scoreSlice = createSlice({
         quote: ValueNegQuoteMapper[action.payload],
       };
       newItem.score = calcIdleMoveScore(newItem);
-      newItem.rate = calcIdleMoveRate(newItem);
+      newItem.rate = calcIdleMoveRate(newItem, state.totalScore);
 
       const diff = newItem.score * newItem.rate;
       state.totalScore = Math.floor(state.totalScore + diff);

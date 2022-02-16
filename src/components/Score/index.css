@@ -6,9 +6,10 @@
 .score-point {
   margin: 0 12px;
   padding: 2px 0 0 6px;
+  display: inline-block;
+  width: auto;
   height: auto;
   cursor: pointer;
-  /* border-left: 3px solid RebeccaPurple; */
 }
 
 .soccer-label {

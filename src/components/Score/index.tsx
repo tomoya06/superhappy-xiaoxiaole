@@ -25,7 +25,7 @@ let visitedCounterQueueIdx = 0;
 
 const ScoreNumber = memo(AnimatedNumbers, (prevProps, nextProps) => {
   return prevProps.animateToNumber === nextProps.animateToNumber;
-})
+});
 
 export function Score() {
   const [localScore, setLocalScore] = useState(0);
@@ -60,7 +60,7 @@ export function Score() {
       if (counterQueue[visitedCounterQueueIdx]) {
         setCurCounter(counterQueue[visitedCounterQueueIdx++]);
       }
-    }, 500);
+    }, 800);
 
     return () => {
       clearInterval(intId);
@@ -127,7 +127,7 @@ export function Score() {
               style={{
                 lineHeight: "24px",
                 backgroundColor: resetTeam ? "tomato" : "gray",
-                color: resetTeam ? "white" : "default",
+                color: "white",
               }}
             >
               {resetTeam ? "解散球队" : "不解散球队"}
@@ -153,11 +153,12 @@ export function Score() {
                 缩减
               </button>
               <div style={{ textAlign: "center", margin: "0 12px" }}>
-                <div style={{ fontSize: 12 }}>目前投入</div>
+                <div style={{ fontSize: 12 }}>目前布局</div>
                 <div
                   style={{
                     fontSize: 20,
                     fontWeight: 600,
+                    width: 80,
                     margin: "2px 0 6px 0",
                   }}
                 >
@@ -176,7 +177,12 @@ export function Score() {
               style={{ borderTop: "1px solid gray", margin: "0 0 20px" }}
             ></div>
 
-            <button onClick={() => handleConfirm()}>确认球队管理</button>
+            <button
+              onClick={() => handleConfirm()}
+              style={{ lineHeight: "24px" }}
+            >
+              确认球队管理
+            </button>
           </div>
         </>
       </Modal>
