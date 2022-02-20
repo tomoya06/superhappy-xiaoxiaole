@@ -33,7 +33,7 @@ export const ValueImgMapper = [
   gongxi,
 ];
 
-export const ValueScoreMapper = [1000, 888, -100, -200, 300, 500];
+export const ValueScoreMapper = [1000, 888, 400, 666, 555, 233];
 
 export const ValueQuoteMapper = [
   "新 年 快 乐！",

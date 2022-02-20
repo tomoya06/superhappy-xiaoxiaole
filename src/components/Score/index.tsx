@@ -73,6 +73,8 @@ export function Score() {
 
     if (isChanged) {
       location.reload();
+    } else {
+      setShowModal(false);
     }
   };
 
