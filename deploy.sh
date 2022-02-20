@@ -23,3 +23,5 @@ git commit -m 'deploy'
 git push -f git@github.com:tomoya06/superhappy-xiaoxiaole.git master:gh-pages
 
 cd -
+
+echo 'visit https://tomoya06.github.io/superhappy-xiaoxiaole/ for changes'
