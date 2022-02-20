@@ -22,9 +22,29 @@
   width: 0;
   height: 0;
   border: 0 solid transparent;
-  border-left-width: 10px;
-  border-right-width: 10px;
-  border-top: 19px solid black;
+  border-left-width: 6px;
+  border-right-width: 6px;
+  border-top: 20px solid black;
+}
+
+.progress-indicator {
+  position: absolute;
+  bottom: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  width: 200px;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.progress-indicator::after {
+  content: '';
+  position: absolute;
+  border-left: 2px solid black;
+  height: 20px;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .progress-block {

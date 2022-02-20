@@ -65,19 +65,19 @@ export const HelperText = `
 会手足无措(指空划动会扣分)，
 也会有挫折(指某些卡片也会扣分)，
 
-但我们对国足的热爱始终都在！`
+但我们对国足的热爱始终都在！`;
 
-export const ProgressMarker: [number, string][] = [
-  [-10000, "濒临解散"],
+export const ProgressMarker: [number, string, string?][] = [
+  [-10000, "濒临解散", "local"],
   [0, "球队组建"],
   [2000, "校队冠军"],
   [10000, "市队冠军"],
   [20000, "省队冠军"],
-  [30000, "入选国家队"],
+  [30000, "入选国家队", "national"],
   [66666, "国家队首胜"],
   [88888, "国家队连胜"],
   [100000, "国家队出征不败！"],
-  [200000, "进军亚洲杯！"],
+  [200000, "进军亚洲杯！", "asian"],
   [250000, "亚洲杯首胜！"],
   [250001, "亚洲杯赢越南！"],
   [300000, "亚洲杯赢韩国！"],
@@ -89,7 +89,7 @@ export const ProgressMarker: [number, string][] = [
   [666666, "亚洲杯总决赛加时！"],
   [888888, "总决赛点球大战！"],
   [1000000, "亚洲杯冠军！！！"],
-  [1100000, "进军世界杯！！！"],
+  [1100000, "进军世界杯！！！", "world"],
   [1100001, "世界杯小组赛首战"],
   [1200000, "世界杯小组赛首败"],
   [1400000, "世界杯小组赛首胜！"],
@@ -98,11 +98,11 @@ export const ProgressMarker: [number, string][] = [
   [1900000, "1/4决赛打进加时赛！"],
   [1999999, "1/4决赛加时赛绝杀！"],
   [2000000, "1/4决赛获胜！"],
-  [2500000, "半决赛率先进球！"],
+  [2500000, "半决赛率先进球！", 'world_semi'],
   [2800000, "半决赛扩大比分！"],
   [3000000, "进球停不下来！！"],
   [4000000, "半决赛横扫获胜！！"],
-  [5000000, "总决赛先丢一球"],
+  [5000000, "总决赛先丢一球", 'world_final'],
   [5500000, "守门员扑出点球"],
   [5555555, "下半场追回一球！"],
   [8888888, "再追一球！"],
@@ -119,5 +119,33 @@ export const ProgressMarker: [number, string][] = [
   [81000000, "没有扑出"],
   [90000000, "第五球踢进！"],
   [99999999, "最后一球扑出去了！"],
-  [100000000, "捧起大力神杯！！！"],
+  [100000000, "捧起大力神杯！！！", "finish"],
 ];
+
+const ProgressIndicatorMapper: Record<string, string> = {
+  nagetive: "球队危机",
+  local: "球队搭建",
+  national: "国家队出征",
+  asian: "征战亚洲杯",
+  world: "出战世界杯",
+  world_semi: '世界杯半决赛',
+  world_final: '世界杯总决赛',
+  finish: "所向披靡",
+};
+
+export const getProgressIndicator = (score: number): string => {
+  let curIndi = "";
+  if (score < ProgressMarker[0][0]) {
+    return ProgressIndicatorMapper["nagetive"];
+  }
+  for (const pro of ProgressMarker) {
+    if (pro[2]) {
+      curIndi = ProgressIndicatorMapper[pro[2]];
+    }
+    if (score < pro[0]) {
+      return curIndi;
+    }
+  }
+
+  return curIndi;
+};

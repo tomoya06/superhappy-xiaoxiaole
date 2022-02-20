@@ -1,7 +1,8 @@
 import { useMemo } from "preact/hooks";
 import { useAppSelector } from "../../store/hooks";
-import { ProgressMarker } from "../../utils/const";
+import { getProgressIndicator, ProgressMarker } from "../../utils/const";
 import "./index.css";
+import { Indicator } from "./indicator";
 
 function ProgressBlock(props: { label: string; value: number }) {
   const { label, value } = props;
@@ -47,9 +48,17 @@ export function Progress() {
     return -(pos + blockDelta) * BlockWidth;
   }, [totalScore]);
 
+  const myIndicator = useMemo(() => {
+    return getProgressIndicator(totalScore);
+  }, [totalScore]);
+
   return (
     <div id="progress">
-      <div className="progress-myPos"></div>
+      <div className="progress-myPos">
+        <div className="progress-indicator">
+          <Indicator text={myIndicator} />
+        </div>
+      </div>
       <div
         className="progress-container"
         style={{
