@@ -7,7 +7,7 @@
     "build": "tsc && vite build",
     "buildgh": "tsc && vite build --mode=github",
     "preview": "vite preview",
-    "deploy": "bash deploy.sh"
+    "deploy": "yarn buildgh && gh-pages -d dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.2",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.1.5",
     "@types/events": "^3.0.0",
+    "gh-pages": "^4.0.0",
     "typescript": "^4.5.4",
     "vite": "^2.8.0",
     "vite-svg-loader": "^3.1.2"
